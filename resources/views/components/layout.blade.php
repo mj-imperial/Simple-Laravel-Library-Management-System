@@ -16,7 +16,7 @@
 
             {{-- Login and Register --}}
             <div class="flex items-center gap-4">
-                <a href="" class="nav-link">Login</a>
+                <a href="{{ route('login') }}" class="nav-link">Login</a>
                 <a href=" {{route('register')}} " class="nav-link">Register</a>
             </div>
         </nav>
@@ -25,5 +25,23 @@
     <main class="py-8 px-7">
         {{ $slot }}
     </main>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('formSubmit', () => ({
+                submit() {
+                    this.$refs.btn.disabled = true;
+                    this.$refs.btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+                    this.$refs.btn.classList.add('bg-emerald-400');
+                    this.$refs.btn.innerHTML =
+                        `<span class="absolute left-2 top-1/2 -translate-y-1/2 transform">
+                        <i class="fa-solid fa-spinner animate-spin"></i>
+                        </span>Please wait...`;
+
+                    this.$el.submit()
+                }
+            }))
+        })
+    </script>
 </body>
 </html>

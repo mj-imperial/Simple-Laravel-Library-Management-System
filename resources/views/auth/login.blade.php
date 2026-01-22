@@ -1,3 +1,45 @@
 <x-layout>
     <h1 class="text-center title">Login into a new account</h1>
+
+    <div class="mx-auto max-w-screen-sm card">
+        <form action="{{ route('login') }}" method="post"
+        x-data="formSubmit" @submit.prevent="submit">
+            @csrf
+
+            {{-- Email --}}
+            <div class="mb-4">
+                <label for="email">Email</label>
+                <input type="text" name="email" value="{{ old('email') }}"
+                class="@error('email') ring-red-500 @enderror">
+
+                @error('email')
+                    <p class="error">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Password --}}
+            <div class="mb-4">
+                <label for="password">Password</label>
+                <input type="password" name="password"
+                class="@error('password') ring-red-500 @enderror">
+
+                @error('password')
+                    <p class="error">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Remember Me --}}
+            <div class="mb-4">
+                <input type="checkbox" name="remember">
+                <label for="remember">Keep Me Logged In</label>
+            </div>
+
+            @error('failed')
+                <p class="error">{{ $message }}</p>
+            @enderror
+
+            {{-- Submit Button --}}
+            <button class="btn" x-ref="btn">Login</button>
+        </form>
+    </div>
 </x-layout>
